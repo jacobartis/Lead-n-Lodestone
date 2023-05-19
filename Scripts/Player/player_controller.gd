@@ -123,7 +123,7 @@ func _ready() -> void:
 	for child in hand.get_children():
 		if !child is Weapon:
 			continue
-		pickup_weapon(child)
+		call_deferred("pickup_weapon",child)
 		return
 
 func _process(delta) -> void:
@@ -135,14 +135,9 @@ func _process(delta) -> void:
 func set_weapon_aim() -> void:
 	if !aim_ray.is_colliding():
 		return
-	var weapon = null
-	for child in hand.get_children():
-		if !child is Weapon:
-			continue
-		weapon = child
-	if !weapon:
+	if !get_weapon():
 		return
-	weapon.set_projectile_spawn_direction(aim_ray.get_collision_point())
+	get_weapon().set_projectile_spawn_direction(aim_ray.get_collision_point())
 
 func _physics_process(delta) -> void:
 	state_controller.physics_process(delta)
@@ -166,28 +161,25 @@ func pickup_weapon(new_weapon:RigidBody3D):
 	
 	#Removes previous weapon
 	drop_weapon()
+	
 	#Equips new weapon
-	if !new_weapon.get_parent():
-		hand.add_child(new_weapon)
-	elif new_weapon.get_parent() != hand:
+	if new_weapon.get_parent():
 		new_weapon.get_parent().remove_child(new_weapon)
-		hand.add_child(new_weapon)
+	hand.add_child(new_weapon)
 	new_weapon.set_global_transform(hand.get_global_transform())
-#	new_weapon.set_held(true)
-	new_weapon.set_model_layer(2)
+	new_weapon.change_state(WeaponBaseState.State.Player)
 	set_weapon(new_weapon)
 
-func drop_weapon() -> void:
+func drop_weapon(push_strength:int=1) -> void:
 	weapon = get_weapon()
-	
 	if !weapon:
 		return
-	
 	hand.remove_child(weapon)
-	find_parent("QodotMap").call_deferred("add_child",weapon)
-	weapon.set_global_transform(camera.get_global_transform())
-	weapon.set_equiped(false)
-	weapon.push(get_position(),1)
+	find_parent("QodotMap").add_child(weapon)
+	weapon.set_global_transform($Camera3D/DropPos.get_global_transform())
+	weapon.call_deferred("change_state",WeaponBaseState.State.Unequipped)
+	weapon.push(camera.get_global_position(),push_strength)
+	set_weapon(null)
 
 #Handles calling attack on held weapon
 func attack() -> void:
@@ -207,20 +199,7 @@ func auto_attack() -> void:
 
 #Handles throwing the held weapon
 func throw() -> void:
-	if !get_weapon():
-		return
-	hand.remove_child(get_weapon())
-	find_parent("QodotMap").add_child(get_weapon())
-	get_weapon().set_global_position(camera.get_global_position())
-	get_weapon().set_collectable(false)
-	var cam_rot = camera.get_global_rotation().normalized()
-	get_weapon().throw(Vector3(0,0,-35).rotated(Vector3(1,0,0),cam_rot.x).rotated(Vector3(0,1,0),get_rotation().y).rotated(Vector3(0,0,1),cam_rot.z))
-	set_weapon(null)
-
-#func pull_magnet(delta) -> void:
-#	set_energy(get_energy()-get_magnet_cost()*delta)
-#	for body in magnetic_bodies:
-#		body.magnetic_pull(get_global_position(),magnet_strength)
+	drop_weapon(20)
 
 func pull_magnet(delta) -> void:
 	weapon_magnet_system.pull()
@@ -248,7 +227,8 @@ func _on_magnet_area_body_exited(body):
 
 func _on_auto_pickup_area_entered(area):
 	if area.is_in_group("Weapon") and !get_weapon():
-		pickup_weapon(area.get_parent())
+#		pickup_weapon(area.get_parent())
+		return
 
 func _on_auto_pickup_body_entered(body):
 	if body.is_in_group("Collectable"):
