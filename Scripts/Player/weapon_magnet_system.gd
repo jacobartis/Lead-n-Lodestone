@@ -18,7 +18,6 @@ func push() -> void:
 
 #Gets the point of the magnatisms origin
 func get_magnet_point() -> Vector3:
-	print((get_collision_point()-global_position).length_squared())
 	if (get_collision_point()-global_position).length_squared() > 2.5:
 		#If the distance is bigger than 2 a default position is used instead
 		return default.get_global_position()

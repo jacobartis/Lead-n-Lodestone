@@ -23,7 +23,6 @@ func set_target_groups(value:Array) -> void:
 #Functions
 
 func _ready():
-	print(self,position)
 	timer.start(3)
 
 func _physics_process(delta):
