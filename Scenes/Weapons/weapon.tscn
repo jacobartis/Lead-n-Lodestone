@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://bx7it0qy2ltjg"]
+[gd_scene load_steps=11 format=3 uid="uid://bx7it0qy2ltjg"]
 
 [ext_resource type="Script" path="res://Scripts/Weapons/weapon_base.gd" id="1_s2dcv"]
 [ext_resource type="Resource" uid="uid://btr1krsbto6lb" path="res://Resources/Weapon Stats/test_weapon.tres" id="2_1d6fv"]
+[ext_resource type="Script" path="res://Scripts/Weapons/weapon_state_controller.gd" id="3_5qaih"]
+[ext_resource type="Script" path="res://Scripts/Weapons/weapon_unequipped_state.gd" id="4_4yjgo"]
+[ext_resource type="Script" path="res://Scripts/Weapons/weapon_player_state.gd" id="5_ywtvj"]
+[ext_resource type="Script" path="res://Scripts/Weapons/weapon_enemy_state.gd" id="6_wbnty"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oub4d"]
-size = Vector3(0.1, 0.1, 0.5)
+size = Vector3(0.153, 0.15, 0.6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jgs5j"]
 albedo_color = Color(0.321569, 0.588235, 0.301961, 1)
@@ -17,7 +21,7 @@ size = Vector3(0.1, 0.1, 0.5)
 
 [node name="Weapon" type="RigidBody3D" groups=["Magnetic", "Weapon"]]
 collision_layer = 2
-collision_mask = 2
+collision_mask = 3
 max_contacts_reported = 2
 contact_monitor = true
 script = ExtResource("1_s2dcv")
@@ -44,15 +48,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
 [node name="AttackCooldown" type="Timer" parent="."]
 one_shot = true
 
-[node name="DecayTimer" type="Timer" parent="."]
-
-[node name="CollisionDelay" type="Timer" parent="."]
-one_shot = true
-
 [node name="ReloadTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="StateController" type="Node" parent="."]
+script = ExtResource("3_5qaih")
+
+[node name="Unequipped" type="Node" parent="StateController"]
+script = ExtResource("4_4yjgo")
+
+[node name="Timer" type="Timer" parent="StateController/Unequipped"]
+one_shot = true
+autostart = true
+
+[node name="Player" type="Node" parent="StateController"]
+script = ExtResource("5_ywtvj")
+
+[node name="Enemy" type="Node" parent="StateController"]
+script = ExtResource("6_wbnty")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="timeout" from="DecayTimer" to="." method="_on_decay_timer_timeout"]
-[connection signal="timeout" from="CollisionDelay" to="." method="_on_collision_delay_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
+[connection signal="timeout" from="StateController/Unequipped/Timer" to="StateController/Unequipped" method="_on_timer_timeout"]
