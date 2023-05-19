@@ -25,5 +25,5 @@ func set_sensitivity(value):
 
 #Testing
 func _input(event):
-	if Input.is_action_just_pressed("ui_cancel"):
+	if event.is_action_pressed("ui_cancel"):
 		set_lock_mouse(!is_mouse_locked())
