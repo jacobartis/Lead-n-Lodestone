@@ -201,8 +201,11 @@ func auto_attack() -> void:
 func throw() -> void:
 	drop_weapon(20)
 
-func pull_magnet(delta) -> void:
+func pull_magnet() -> void:
 	weapon_magnet_system.pull()
+
+func push_magnet() -> void:
+	weapon_magnet_system.push()
 
 #Handles taking damage
 func take_damage(damage) -> void:

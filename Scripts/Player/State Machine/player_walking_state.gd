@@ -8,7 +8,7 @@ func process(delta):
 	elif is_slide_pressed():
 		return PlayerBaseState.State.Sliding
 	check_attack()
-	check_pull(delta)
+	check_magnet()
 	recover_energy(delta)
 	return PlayerBaseState.State.None
 
@@ -29,9 +29,11 @@ func check_attack():
 	elif Input.is_action_pressed("Player_Attack"):
 		body.auto_attack()
 
-func check_pull(delta):
-	if Input.is_action_pressed("Player_Pull") and body.get_energy()>=body.get_magnet_cost():
-		body.pull_magnet(delta)
+func check_magnet():
+	if Input.is_action_pressed("Player_Pull") and Input.is_action_pressed("Player_Attack"):
+		body.push_magnet()
+	elif Input.is_action_pressed("Player_Pull"):
+		body.pull_magnet()
 
 func recover_energy(delta):
 	body.set_energy(clamp(body.get_energy()+delta/4,0,body.get_max_energy()))
