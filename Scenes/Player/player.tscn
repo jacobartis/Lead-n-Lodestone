@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://n2srf2j7f04k"]
+[gd_scene load_steps=15 format=3 uid="uid://n2srf2j7f04k"]
 
 [ext_resource type="Script" path="res://Scripts/Player/player_controller.gd" id="1_3ib8c"]
 [ext_resource type="Script" path="res://Scripts/Player/player_debug.gd" id="2_6embc"]
@@ -10,7 +10,6 @@
 [ext_resource type="Shader" path="res://Shaders/player_pixel.gdshader" id="5_qchy3"]
 [ext_resource type="PackedScene" uid="uid://dfvj8m3ovs3jq" path="res://Scenes/Player/weapon_magnet_system.tscn" id="5_vna5x"]
 [ext_resource type="Script" path="res://Scripts/Player/State Machine/player_slide_state.gd" id="7_eg50b"]
-[ext_resource type="Script" path="res://Scripts/Player/State Machine/player_dashing_state.gd" id="8_ahpek"]
 [ext_resource type="Script" path="res://Scripts/Player/State Machine/player_dead_state.gd" id="8_lx5qj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c2fjn"]
@@ -94,12 +93,6 @@ script = ExtResource("3_hriee")
 
 [node name="Walking" type="Node" parent="StateController"]
 script = ExtResource("3_xj4hf")
-
-[node name="Dashing" type="Node" parent="StateController"]
-script = ExtResource("8_ahpek")
-
-[node name="DashTimer" type="Timer" parent="StateController/Dashing"]
-one_shot = true
 
 [node name="Sliding" type="Node" parent="StateController"]
 script = ExtResource("7_eg50b")

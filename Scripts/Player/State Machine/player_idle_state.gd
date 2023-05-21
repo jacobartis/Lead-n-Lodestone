@@ -7,8 +7,6 @@ extends PlayerBaseState
 func process(delta) -> PlayerBaseState.State:
 	if is_slide_pressed():
 		return PlayerBaseState.State.Sliding
-	elif is_dash_pressed():
-		return PlayerBaseState.State.Dashing
 	elif is_direction_pressed():
 		return PlayerBaseState.State.Walking
 	check_attack()
@@ -27,8 +25,11 @@ func is_dash_pressed() -> bool:
 func is_slide_pressed() -> bool:
 	return Input.is_action_pressed("Player_Slide") and body.is_on_floor()
 
-#Checks if the player is attacking
+#Checks if the player is attacking, cant attack while pulling
 func check_attack():
+	if Input.is_action_pressed("Player_Pull"):
+		return
+	
 	if Input.is_action_just_pressed("Player_Attack"):
 		body.attack()
 	elif Input.is_action_pressed("Player_Attack"):

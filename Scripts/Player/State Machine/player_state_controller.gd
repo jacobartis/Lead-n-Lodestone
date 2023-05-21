@@ -7,7 +7,6 @@ extends PlayerBaseState
 	PlayerBaseState.State.Idle: $Idle,
 	PlayerBaseState.State.Walking: $Walking,
 	PlayerBaseState.State.Sliding: $Sliding,
-	PlayerBaseState.State.Dashing: $Dashing,
 	PlayerBaseState.State.Dead: $Dead
 }
 
