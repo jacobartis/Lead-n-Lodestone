@@ -82,10 +82,10 @@ func reload() -> void:
 	reload_timer.start(stats.get_reload_time())
 
 func pull(pos:Vector3,strength:float):
-	set_linear_velocity(get_position().direction_to(pos).normalized()*strength*sqrt(position.distance_to(pos)))
+	set_linear_velocity(get_position().direction_to(pos).normalized()*strength)
 
 func push(pos:Vector3,strength:float):
-	set_linear_velocity(pos.direction_to(get_position()).normalized()*strength)
+	apply_central_impulse(pos.direction_to(get_position()).normalized()*strength)
 
 #Signal Functions
 
