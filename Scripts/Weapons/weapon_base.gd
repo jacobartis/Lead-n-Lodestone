@@ -81,11 +81,12 @@ func reload() -> void:
 		return
 	reload_timer.start(stats.get_reload_time())
 
+#Handles magnetic properties
+#Should be moved into own modular node 
 func pull(pos:Vector3,strength:float):
 	set_linear_velocity(get_position().direction_to(pos).normalized()*strength)
-
 func push(pos:Vector3,strength:float):
-	apply_central_impulse(pos.direction_to(get_position()).normalized()*strength)
+	set_linear_velocity(pos.direction_to(get_position()).normalized()*strength)
 
 #Signal Functions
 
