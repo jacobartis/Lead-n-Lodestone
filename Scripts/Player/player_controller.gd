@@ -158,10 +158,8 @@ func interact() -> void:
 func pickup_weapon(new_weapon:RigidBody3D):
 	if !new_weapon is Weapon:
 		return
-	
 	#Removes previous weapon
 	drop_weapon()
-	
 	#Equips new weapon
 	if new_weapon.get_parent():
 		new_weapon.get_parent().remove_child(new_weapon)
