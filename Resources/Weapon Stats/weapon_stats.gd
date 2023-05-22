@@ -2,19 +2,22 @@ extends Resource
 class_name WeaponStats
 
 @export var damage: float = 10.0
+@export var health: float = 10.0
 @export var fire_rate: float = 2
 @export var max_ammo: int = 10
 @export var reload_time: float = 1
 @export var auto: bool = true
 @export var mass: float = 15.0
 @export var thrown_damage: float = 10.0
-@export var jam_chance: float = 0
 @export var projectile: PackedScene
 
 #Getters
 
 func get_damage() -> float:
 	return damage
+
+func get_health() -> float:
+	return health
 
 func get_fire_rate() -> float:
 	return fire_rate
@@ -33,9 +36,6 @@ func get_mass() -> float:
 
 func get_thrown_damage() -> float:
 	return thrown_damage
-
-func get_jam_chance() -> float:
-	return jam_chance
 
 func get_projectile() -> PackedScene:
 	return projectile

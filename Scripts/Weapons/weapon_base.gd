@@ -4,8 +4,8 @@ class_name Weapon
 #Constants
 
 const DESPAWN_TIME: float = 3
-const PROJ_SPEED: float = 75
-const BREAK_SPEED: float = 20
+const PROJ_SPEED: float = 100
+const DAMAGE_SPEED: float = 15
 
 #Node References
 
@@ -19,6 +19,8 @@ const BREAK_SPEED: float = 20
 #Variables
 
 @export var stats: Resource
+
+var health: float
 
 @onready var ammo: int = stats.get_max_ammo() 
 
@@ -51,6 +53,7 @@ func get_ammo() -> int:
 
 func _ready():
 	state_controller.init(self)
+	health = stats.get_health()
 	set_mass(stats.get_mass())
 
 #Fires the gun repeatedly if is_auto is true
@@ -88,6 +91,11 @@ func pull(pos:Vector3,strength:float):
 func push(pos:Vector3,strength:float):
 	set_linear_velocity(pos.direction_to(get_position()).normalized()*strength)
 
+func damage(value:float) -> void:
+	health = clamp(health-value,0,INF)
+	if !health:
+		call_deferred("queue_free")
+
 #Signal Functions
 
 func _on_body_entered(body) -> void:
@@ -97,9 +105,8 @@ func _on_body_entered(body) -> void:
 func handle_collision(body):
 	if body.is_in_group("Enemy") and get_linear_velocity().length() > 2:
 		body.take_damage(get_mass()*get_linear_velocity().length() + stats.get_thrown_damage())
-	
-	if get_linear_velocity().length()>BREAK_SPEED:
-		call_deferred("queue_free")
+	if get_linear_velocity().length()>DAMAGE_SPEED:
+		damage(sqrt(get_linear_velocity().length()))
 
 func _on_reload_timer_timeout():
 	set_ammo(get_stats().get_max_ammo())
