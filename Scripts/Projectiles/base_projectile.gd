@@ -33,11 +33,10 @@ func _physics_process(delta):
 func _on_despawn_timer_timeout():
 	call_deferred("queue_free")
 
-
 func _on_detection_area_body_entered(body):
 	for group in target_groups:
 		if body.is_in_group(group):
-			body.take_damage(damage)
+			body.damage(damage)
 			call_deferred("queue_free")
 		if !body.is_in_group("AllowsBullets"):
 			call_deferred("queue_free")

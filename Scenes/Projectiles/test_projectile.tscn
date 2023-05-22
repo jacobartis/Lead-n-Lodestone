@@ -3,16 +3,18 @@
 [ext_resource type="Script" path="res://Scripts/Projectiles/base_projectile.gd" id="1_45goe"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4d2dw"]
-radius = 0.125
+margin = 0.02
+radius = 0.063
 
 [sub_resource type="SphereMesh" id="SphereMesh_c3oor"]
-radius = 0.125
-height = 0.25
+radius = 0.063
+height = 0.125
 radial_segments = 8
 rings = 8
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cn8un"]
-radius = 0.125
+margin = 0.02
+radius = 0.063
 
 [node name="Projectile" type="CharacterBody3D"]
 script = ExtResource("1_45goe")
@@ -27,6 +29,8 @@ mesh = SubResource("SphereMesh_c3oor")
 [node name="DespawnTimer" type="Timer" parent="."]
 
 [node name="DetectionArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
 shape = SubResource("SphereShape3D_cn8un")
