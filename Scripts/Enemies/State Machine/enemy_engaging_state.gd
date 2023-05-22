@@ -24,7 +24,7 @@ func aim_at():
 #Handles the shooting of the attack state
 func attack() -> void:
 	body.get_weapon().look_at(body.get_target().get_position())
-	body.get_weapon().attack(["Player"])
+	body.get_weapon().attack(["Player","Weapon"])
 
 func physics_process(delta):
 	if !body.get_target():

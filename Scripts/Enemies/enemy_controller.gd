@@ -68,8 +68,7 @@ func _physics_process(delta):
 func _input(event):
 	state_controller.input(event)
 
-func take_damage(damage) -> void:
-	print(damage)
+func damage(damage) -> void:
 	set_health(clamp(get_health()-damage,0,INF))
 
 func set_weapon_aim() -> void:

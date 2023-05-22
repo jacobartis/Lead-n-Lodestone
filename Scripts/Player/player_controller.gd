@@ -184,7 +184,7 @@ func attack() -> void:
 	for child in hand.get_children():
 		if !child is Weapon:
 			continue
-		child.attack(["Enemy"])
+		child.attack(["Enemy","Weapon"])
 		return
 
 #Handles calling auto attack on held weapon
@@ -206,7 +206,7 @@ func push_magnet() -> void:
 	weapon_magnet_system.push()
 
 #Handles taking damage
-func take_damage(damage) -> void:
+func damage(damage) -> void:
 	set_health(clamp(get_health()-damage,0,INF))
 
 #Handles healing returns false if the player cant be healed

@@ -12,7 +12,7 @@ func pull() -> void:
 	var mag_pos = magnet_area.get_global_position()
 	for body in magnet_area.get_overlapping_bodies():
 		if body.is_in_group("Magnetic"):
-			body.pull(mag_pos,10*sqrt(mag_pos.distance_to(body.get_position())))
+			body.pull(mag_pos,15*sqrt(mag_pos.distance_to(body.get_position())))
 
 #Handles pushing weapons away from the magnet point
 func push() -> void:
