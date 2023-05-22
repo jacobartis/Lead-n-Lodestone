@@ -22,6 +22,9 @@ const DAMAGE_SPEED: float = 15
 
 var health: float
 
+#Stores a refrence to the magnet node (if there is one)
+var magnet_node: Node
+
 @onready var ammo: int = stats.get_max_ammo() 
 
 #Setters
@@ -38,6 +41,9 @@ func set_projectile_spawn_direction(value:Vector3) -> void:
 func set_layer_mask(value: int):
 	model.set_layer_mask(1)
 
+func set_magnetic_node(value: Node) -> void:
+	magnet_node = value
+
 #Getters
 
 func get_stats() -> Resource:
@@ -48,6 +54,9 @@ func is_collectable() -> bool:
 
 func get_ammo() -> int:
 	return ammo
+
+func get_magnetic_node() -> Node:
+	return magnet_node
 
 #Functions
 
@@ -83,13 +92,6 @@ func reload() -> void:
 	if reload_timer.get_time_left() > 0:
 		return
 	reload_timer.start(stats.get_reload_time())
-
-#Handles magnetic properties
-#Should be moved into own modular node 
-func pull(pos:Vector3,strength:float):
-	set_linear_velocity(get_position().direction_to(pos).normalized()*strength)
-func push(pos:Vector3,strength:float):
-	set_linear_velocity(pos.direction_to(get_position()).normalized()*strength)
 
 func damage(value:float) -> void:
 	health = clamp(health-value,0,INF)
