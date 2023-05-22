@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bx7it0qy2ltjg"]
+[gd_scene load_steps=12 format=3 uid="uid://bx7it0qy2ltjg"]
 
 [ext_resource type="Script" path="res://Scripts/Weapons/weapon_base.gd" id="1_s2dcv"]
 [ext_resource type="Resource" uid="uid://btr1krsbto6lb" path="res://Resources/Weapon Stats/test_weapon.tres" id="2_1d6fv"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/Weapons/weapon_unequipped_state.gd" id="4_4yjgo"]
 [ext_resource type="Script" path="res://Scripts/Weapons/weapon_player_state.gd" id="5_ywtvj"]
 [ext_resource type="Script" path="res://Scripts/Weapons/weapon_enemy_state.gd" id="6_wbnty"]
+[ext_resource type="Script" path="res://Scripts/Magnetic/magnetic_weapon.gd" id="7_3nbju"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oub4d"]
 size = Vector3(0.153, 0.15, 0.6)
@@ -19,7 +20,7 @@ size = Vector3(0.1, 0.1, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pxc46"]
 
-[node name="Weapon" type="RigidBody3D" groups=["Magnetic", "Weapon"]]
+[node name="Weapon" type="RigidBody3D" groups=["Weapon"]]
 collision_layer = 2
 collision_mask = 3
 max_contacts_reported = 2
@@ -66,6 +67,9 @@ script = ExtResource("5_ywtvj")
 
 [node name="Enemy" type="Node" parent="StateController"]
 script = ExtResource("6_wbnty")
+
+[node name="Magnetic" type="Node" parent="."]
+script = ExtResource("7_3nbju")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
