@@ -6,7 +6,7 @@
 radius = 10.0
 
 [node name="WeaponMagnetSystem" type="RayCast3D"]
-target_position = Vector3(0, 0, -30)
+target_position = Vector3(0, 0, -3)
 debug_shape_custom_color = Color(0.639216, 0.305882, 0, 1)
 script = ExtResource("1_6d0ka")
 
