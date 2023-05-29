@@ -6,7 +6,6 @@ class_name magnetic
 
 #Adds the body to the magnetic group and sets their magnetic node to this
 func _ready():
-	body.set_magnetic_node(self)
 	body.add_to_group("Magnetic")
 
 #Base function for pull

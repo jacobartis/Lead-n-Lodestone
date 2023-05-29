@@ -12,14 +12,14 @@ func pull() -> void:
 	var mag_pos = magnet_area.get_global_position()
 	for body in magnet_area.get_overlapping_bodies():
 		if body.is_in_group("Magnetic"):
-			body.get_magnetic_node().pull(mag_pos,15*sqrt(mag_pos.distance_to(body.get_position())))
+			body.find_child("Magnetic").pull(mag_pos,15*sqrt(mag_pos.distance_to(body.get_position())))
 
 #Handles pushing weapons away from the magnet point
 func push() -> void:
 	magnet_area.set_global_position(get_magnet_point())
 	for body in magnet_area.get_overlapping_bodies():
 		if body.is_in_group("Magnetic"):
-			body.get_magnetic_node().push(get_global_position(),20)
+			body.find_child("Magnetic").push(get_global_position(),20)
 	pull_cooldown.start(1)
 
 #Gets the point of the magnatisms origin
