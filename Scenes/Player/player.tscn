@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://n2srf2j7f04k"]
+[gd_scene load_steps=15 format=3 uid="uid://j5jgmyefyemx"]
 
 [ext_resource type="Script" path="res://Scripts/Player/player_controller.gd" id="1_3ib8c"]
 [ext_resource type="Script" path="res://Scripts/Player/player_debug.gd" id="2_6embc"]
@@ -8,8 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/Player/State Machine/player_walking_state.gd" id="3_xj4hf"]
 [ext_resource type="Environment" uid="uid://d3hqrfj2mfpn1" path="res://Environment.tres" id="4_u3ckk"]
 [ext_resource type="Shader" path="res://Shaders/player_pixel.gdshader" id="5_qchy3"]
-[ext_resource type="PackedScene" uid="uid://dfvj8m3ovs3jq" path="res://Scenes/Player/weapon_magnet_system.tscn" id="5_vna5x"]
-[ext_resource type="PackedScene" uid="uid://c4ygdt7e7nph5" path="res://Scenes/Player/wall_magnet_system.tscn" id="6_smhw6"]
+[ext_resource type="PackedScene" uid="uid://dfvj8m3ovs3jq" path="res://Scenes/Player/magnet_system.tscn" id="5_vna5x"]
 [ext_resource type="Script" path="res://Scripts/Player/State Machine/player_slide_state.gd" id="7_eg50b"]
 [ext_resource type="Script" path="res://Scripts/Player/State Machine/player_dead_state.gd" id="8_lx5qj"]
 
@@ -39,6 +38,8 @@ cull_mask = 1048573
 environment = ExtResource("4_u3ckk")
 current = true
 
+[node name="MagnetSystem" parent="Camera3D" instance=ExtResource("5_vna5x")]
+
 [node name="InteractRay" type="RayCast3D" parent="Camera3D"]
 target_position = Vector3(0, 0, -5)
 collision_mask = 4
@@ -48,8 +49,6 @@ debug_shape_custom_color = Color(0.686275, 0, 0, 1)
 
 [node name="AimRay" type="RayCast3D" parent="Camera3D"]
 target_position = Vector3(0, 0, -1000)
-
-[node name="WeaponMagnetSystem" parent="Camera3D" instance=ExtResource("5_vna5x")]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Camera3D"]
 anchors_preset = 15
@@ -83,8 +82,6 @@ shape = SubResource("CylinderShape3D_udjt5")
 
 [node name="DropPos" type="Node3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.73746e-09, 0, -0.154135)
-
-[node name="WallMagnetSystem" parent="Camera3D" instance=ExtResource("6_smhw6")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 

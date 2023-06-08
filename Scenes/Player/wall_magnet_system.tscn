@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4ygdt7e7nph5"]
-
-[ext_resource type="Script" path="res://Scripts/Player/wall_magnet_system.gd" id="1_4fjw0"]
-
-[node name="WallMagnetSystem" type="RayCast3D"]
-target_position = Vector3(0, 0, -15)
-script = ExtResource("1_4fjw0")
