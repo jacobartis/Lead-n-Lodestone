@@ -71,7 +71,7 @@ func check_interact(event:InputEvent) -> void:
 #Checks if the player is throwing their weapon
 func check_throw(event:InputEvent):
 	if event.is_action_pressed("Player_Throw"):
-		body.throw()
+		body.throw_weapon()
 
 func physics_process(delta):
 	var vel = apply_friction(body.get_velocity(),delta)

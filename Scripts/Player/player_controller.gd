@@ -14,7 +14,7 @@ const FRICTION = 8
 @onready var aim_ray = $Camera3D/AimRay
 @onready var hand = $Camera3D/SubViewportContainer/SubViewport/WeaponCam/Hand
 @onready var weapon_cam = $Camera3D/SubViewportContainer/SubViewport/WeaponCam
-@onready var weapon_magnet_system = $Camera3D/WeaponMagnetSystem
+@onready var weapon_magnet_system = $Camera3D/MagnetSystem
 @onready var animation_player = $AnimationPlayer
 @onready var debug_label = $CanvasLayer/Label
 
@@ -39,6 +39,9 @@ var magnet_cost: float = 2
 var magnetic_bodies: Array = []
 var magnet_strength: float = 10
 var dash_cost: float = 2.5
+
+#Player strength
+var player_strength: float = 20
 
 #Getters
 
@@ -159,7 +162,7 @@ func pickup_weapon(new_weapon:RigidBody3D):
 	if !new_weapon is Weapon:
 		return
 	#Removes previous weapon
-	drop_weapon()
+	throw_weapon()
 	#Equips new weapon
 	if new_weapon.get_parent():
 		new_weapon.get_parent().remove_child(new_weapon)
@@ -168,7 +171,7 @@ func pickup_weapon(new_weapon:RigidBody3D):
 	new_weapon.change_state(WeaponBaseState.State.Player)
 	set_weapon(new_weapon)
 
-func drop_weapon(push_strength:int=1) -> void:
+func throw_weapon(throw_strength:int=player_strength) -> void:
 	weapon = get_weapon()
 	if !weapon:
 		return
@@ -176,7 +179,7 @@ func drop_weapon(push_strength:int=1) -> void:
 	find_parent("QodotMap").add_child(weapon)
 	weapon.set_global_transform($Camera3D/DropPos.get_global_transform())
 	weapon.call_deferred("change_state",WeaponBaseState.State.Unequipped)
-	weapon.push(camera.get_global_position(),push_strength)
+	weapon.set_linear_velocity(camera.get_global_position().direction_to(weapon.get_position()).normalized()*throw_strength)
 	set_weapon(null)
 
 #Handles calling attack on held weapon
@@ -194,10 +197,6 @@ func auto_attack() -> void:
 			continue
 		child.auto_attack(["Enemy"])
 		return
-
-#Handles throwing the held weapon
-func throw() -> void:
-	drop_weapon(20)
 
 func pull_magnet() -> void:
 	weapon_magnet_system.pull()

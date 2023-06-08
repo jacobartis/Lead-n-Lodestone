@@ -95,4 +95,4 @@ func move_camera(mouse_movement:InputEventMouseMotion) -> void:
 #Checks if the player is throwing their weapon
 func check_throw(input):
 	if Input.is_action_just_pressed("Player_Throw"):
-		body.throw()
+		body.throw_weapon()
