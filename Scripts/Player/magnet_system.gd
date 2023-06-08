@@ -1,7 +1,14 @@
-extends RayCast3D
+extends Node3D
 
-@onready var magnet_area = $MagnetArea
+#Acts as bridge between the player script and the two magnet systems
 
+#Node refrences
+@onready var weapon_magnet_system = $WeaponMagnetSystem
+
+#Functions
 
 func pull():
-	magnet_area.set_postition()
+	weapon_magnet_system.pull()
+
+func push():
+	weapon_magnet_system.push()
