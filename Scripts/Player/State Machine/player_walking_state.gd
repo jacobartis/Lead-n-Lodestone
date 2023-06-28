@@ -57,6 +57,7 @@ func movement(delta) -> void:
 		vel.y += body.get_jump_strength()
 	
 	body.set_velocity(vel)
+	
 	body.move_and_slide()
 
 func update_ground_velocity(vel:Vector3,wish_dir:Vector3,delta:float) -> Vector3:

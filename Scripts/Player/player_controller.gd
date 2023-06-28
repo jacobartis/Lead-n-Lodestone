@@ -14,17 +14,16 @@ const FRICTION = 8
 @onready var aim_ray = $Camera3D/AimRay
 @onready var hand = $Camera3D/SubViewportContainer/SubViewport/WeaponCam/Hand
 @onready var weapon_cam = $Camera3D/SubViewportContainer/SubViewport/WeaponCam
-@onready var weapon_magnet_system = $Camera3D/MagnetSystem
+@onready var magnet_system = $Camera3D/MagnetSystem
 @onready var animation_player = $AnimationPlayer
-@onready var debug_label = $CanvasLayer/Label
 
 var weapon: Node3D
 
 #Movement Variables
-var max_ground_speed: float = 8
-var max_air_speed: float = 4
-var acceleration: float = 3
-var jump_strength: float = 5
+var max_ground_speed: float = 10
+var max_air_speed: float = .94
+var acceleration: float = 10*max_ground_speed
+var jump_strength: float = 3
 
 #Health Variables
 var max_health: float = 100
@@ -132,12 +131,13 @@ func _ready() -> void:
 func _process(delta) -> void:
 	state_controller.process(delta)
 	weapon_cam.set_transform(camera.get_global_transform())
-	debug_label.set_text(str(get_energy()))
-	set_weapon_aim()
+	set_aim()
 
-func set_weapon_aim() -> void:
+func set_aim() -> void:
 	if !aim_ray.is_colliding():
+		magnet_system.set_aim(Vector3.ZERO)
 		return
+	magnet_system.set_aim(aim_ray.get_collision_point())
 	if !get_weapon():
 		return
 	get_weapon().set_projectile_spawn_direction(aim_ray.get_collision_point())
@@ -199,13 +199,13 @@ func auto_attack() -> void:
 		return
 
 func pull_magnet() -> void:
-	weapon_magnet_system.pull()
+	magnet_system.pull(magnet_strength)
 
 func push_magnet() -> void:
-	weapon_magnet_system.push()
+	magnet_system.push(magnet_strength)
 
 #Handles taking damage
-func damage(damage) -> void:
+func take_damage(damage) -> void:
 	set_health(clamp(get_health()-damage,0,INF))
 
 #Handles healing returns false if the player cant be healed

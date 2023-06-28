@@ -1,8 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://j5jgmyefyemx"]
+[gd_scene load_steps=18 format=3 uid="uid://coe3g4dti02mv"]
 
 [ext_resource type="Script" path="res://Scripts/Player/player_controller.gd" id="1_3ib8c"]
-[ext_resource type="Script" path="res://Scripts/Player/player_debug.gd" id="2_6embc"]
 [ext_resource type="Script" path="res://Scripts/Player/State Machine/player_state_controller.gd" id="2_6k6l3"]
+[ext_resource type="Script" path="res://Scripts/Debug/player_debug.gd" id="2_ciutm"]
 [ext_resource type="PackedScene" uid="uid://bx7it0qy2ltjg" path="res://Scenes/Weapons/weapon.tscn" id="2_kfgxt"]
 [ext_resource type="Script" path="res://Scripts/Player/State Machine/player_idle_state.gd" id="3_hriee"]
 [ext_resource type="Script" path="res://Scripts/Player/State Machine/player_walking_state.gd" id="3_xj4hf"]
@@ -11,6 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://dfvj8m3ovs3jq" path="res://Scenes/Player/magnet_system.tscn" id="5_vna5x"]
 [ext_resource type="Script" path="res://Scripts/Player/State Machine/player_slide_state.gd" id="7_eg50b"]
 [ext_resource type="Script" path="res://Scripts/Player/State Machine/player_dead_state.gd" id="8_lx5qj"]
+[ext_resource type="Script" path="res://Scripts/Debug/speed_display.gd" id="12_m33t6"]
+[ext_resource type="Script" path="res://Scripts/Debug/debug_value_display.gd" id="13_pltcl"]
+[ext_resource type="Script" path="res://Scripts/Debug/debug_type_display.gd" id="14_bl4dy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c2fjn"]
 
@@ -26,7 +29,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 
 script = ExtResource("1_3ib8c")
 
 [node name="Debug" type="Node" parent="."]
-script = ExtResource("2_6embc")
+script = ExtResource("2_ciutm")
 weapon = ExtResource("2_kfgxt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -110,9 +113,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="SpeedDisplay" type="Label" parent="CanvasLayer"]
 offset_right = 40.0
 offset_bottom = 23.0
+script = ExtResource("12_m33t6")
 
 [node name="Retical" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 8
@@ -128,5 +132,26 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
 
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+
+[node name="ValueDisplay" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("13_pltcl")
+
+[node name="TypeDisplay" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("14_bl4dy")
+
+[connection signal="speed_update" from="Debug" to="CanvasLayer/SpeedDisplay" method="_on_debug_speed_update"]
+[connection signal="type_update" from="Debug" to="CanvasLayer/VBoxContainer/TypeDisplay" method="_on_debug_type_update"]
+[connection signal="value_update" from="Debug" to="CanvasLayer/VBoxContainer/ValueDisplay" method="_on_debug_value_update"]
 [connection signal="area_entered" from="Camera3D/AutoPickup" to="." method="_on_auto_pickup_area_entered"]
 [connection signal="body_entered" from="Camera3D/AutoPickup" to="." method="_on_auto_pickup_body_entered"]
