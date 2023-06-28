@@ -1,7 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://cqx8jhdsb2xr"]
+[gd_scene load_steps=12 format=3 uid="uid://cqx8jhdsb2xr"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/enemy_controller.gd" id="1_730fn"]
-[ext_resource type="PackedScene" uid="uid://bx7it0qy2ltjg" path="res://Scenes/Weapons/weapon.tscn" id="2_hrqsv"]
 [ext_resource type="Script" path="res://Scripts/Enemies/State Machine/enemy_state_controller.gd" id="2_qh36f"]
 [ext_resource type="Resource" uid="uid://yw2l3usfpldt" path="res://Resources/Enemy Stats/test_enemy.tres" id="2_qj73n"]
 [ext_resource type="Script" path="res://Scripts/Enemies/State Machine/enemy_dead_state.gd" id="3_wh3rl"]
@@ -38,8 +37,6 @@ target_position = Vector3(0, 0, -9999)
 
 [node name="Hand" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.4, -0.7)
-
-[node name="Weapon" parent="Hand" instance=ExtResource("2_hrqsv")]
 
 [node name="PlayerDetection" type="Area3D" parent="."]
 

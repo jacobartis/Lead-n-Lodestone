@@ -11,5 +11,5 @@ func drop_weapon() -> void:
 	weapon.get_parent().remove_child(weapon)
 	find_parent("QodotMap").add_child(weapon)
 	weapon.set_transform(pos)
-	weapon.set_collectable(true)
-	weapon.throw(body.get_transform().basis*Vector3(0,0,-5))
+	weapon.call_deferred("change_state",WeaponBaseState.State.Unequipped)
+	body.throw_weapon(1)
