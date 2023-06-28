@@ -7,8 +7,11 @@ extends Node3D
 
 #Functions
 
-func pull():
-	weapon_magnet_system.pull()
+func pull(strength:float):
+	weapon_magnet_system.pull(strength)
 
-func push():
-	weapon_magnet_system.push()
+func push(strength:float):
+	weapon_magnet_system.push(strength)
+
+func set_aim(aim:Vector3):
+	weapon_magnet_system.set_aim(aim)
