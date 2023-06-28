@@ -36,7 +36,7 @@ func _on_despawn_timer_timeout():
 func _on_detection_area_body_entered(body):
 	for group in target_groups:
 		if body.is_in_group(group):
-			body.damage(damage)
+			body.take_damage(damage)
 			call_deferred("queue_free")
 		if !body.is_in_group("AllowsBullets"):
 			call_deferred("queue_free")
