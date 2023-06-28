@@ -23,6 +23,9 @@ var prev_state_dict: WeaponBaseState.State
 func get_state() -> WeaponBaseState:
 	return current_state
 
+func get_state_dict() -> WeaponBaseState.State:
+	return current_state_dict
+
 #Returns previous state
 func get_prev_state() -> WeaponBaseState:
 	return prev_state

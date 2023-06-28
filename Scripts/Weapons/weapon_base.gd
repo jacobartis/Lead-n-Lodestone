@@ -49,6 +49,9 @@ func is_collectable() -> bool:
 func get_ammo() -> int:
 	return ammo
 
+func get_state_dict() -> WeaponBaseState.State:
+	return state_controller.get_state_dict()
+
 #Functions
 
 func _ready():
@@ -84,7 +87,7 @@ func reload() -> void:
 		return
 	reload_timer.start(stats.get_reload_time())
 
-func damage(value:float) -> void:
+func take_damage(value:float) -> void:
 	health = clamp(health-value,0,INF)
 	if !health:
 		call_deferred("queue_free")
@@ -99,7 +102,7 @@ func handle_collision(body):
 	if body.is_in_group("Enemy") and get_linear_velocity().length() > 2:
 		body.take_damage(get_mass()*get_linear_velocity().length() + stats.get_thrown_damage())
 	if get_linear_velocity().length()>DAMAGE_SPEED:
-		damage(sqrt(get_linear_velocity().length()))
+		take_damage(sqrt(get_linear_velocity().length()))
 
 func _on_reload_timer_timeout():
 	set_ammo(get_stats().get_max_ammo())
