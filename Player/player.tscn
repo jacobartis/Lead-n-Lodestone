@@ -1,0 +1,88 @@
+[gd_scene load_steps=14 format=3 uid="uid://ckidi7xl6vlnv"]
+
+[ext_resource type="Script" path="res://Player/Scripts/player_controller.gd" id="1_28mnp"]
+[ext_resource type="Resource" uid="uid://d2gi77v6ex5qj" path="res://Player/Resources/player_physics.tres" id="2_cuoig"]
+[ext_resource type="Script" path="res://Player/Scripts/StateMachine/player_state_controller.gd" id="2_et1iq"]
+[ext_resource type="Script" path="res://Player/Scripts/StateMachine/player_idle_state.gd" id="3_33kkc"]
+[ext_resource type="Script" path="res://Player/Scripts/StateMachine/player_walking_state.gd" id="4_xr1ae"]
+[ext_resource type="Script" path="res://Player/Scripts/StateMachine/player_jumping_state.gd" id="6_tmfyh"]
+[ext_resource type="Script" path="res://Player/Scripts/StateMachine/player_falling_state.gd" id="7_iwjgf"]
+[ext_resource type="Script" path="res://Player/Scripts/Debug/state_label.gd" id="8_70qbj"]
+[ext_resource type="Script" path="res://Player/Scripts/StateMachine/player_dead_state.gd" id="8_pnet5"]
+[ext_resource type="Script" path="res://Player/Scripts/Debug/velocity_label.gd" id="9_it4dh"]
+[ext_resource type="Script" path="res://Player/Scripts/Debug/mode_label.gd" id="11_x6mgf"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m7kah"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1utri"]
+
+[node name="Player" type="CharacterBody3D" groups=["damageable"]]
+script = ExtResource("1_28mnp")
+physics_res = ExtResource("2_cuoig")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_m7kah")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_1utri")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+current = true
+
+[node name="InteractRay" type="RayCast3D" parent="Camera3D"]
+target_position = Vector3(0, 0, -5)
+
+[node name="GunHand" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.25, -0.5)
+
+[node name="BallHand" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, -0.25, -0.5)
+
+[node name="PlayerStateController" type="Node" parent="."]
+script = ExtResource("2_et1iq")
+
+[node name="Idle" type="Node" parent="PlayerStateController"]
+script = ExtResource("3_33kkc")
+
+[node name="Walking" type="Node" parent="PlayerStateController"]
+script = ExtResource("4_xr1ae")
+
+[node name="Jumping" type="Node" parent="PlayerStateController"]
+script = ExtResource("6_tmfyh")
+
+[node name="Falling" type="Node" parent="PlayerStateController"]
+script = ExtResource("7_iwjgf")
+
+[node name="Dead" type="Node" parent="PlayerStateController"]
+script = ExtResource("8_pnet5")
+
+[node name="StateLabel" type="Label" parent="."]
+offset_right = 1158.0
+offset_bottom = 23.0
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_70qbj")
+
+[node name="VelocityLabel" type="Label" parent="."]
+offset_top = 23.0
+offset_right = 1158.0
+offset_bottom = 46.0
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("9_it4dh")
+
+[node name="ModeLabel" type="Label" parent="."]
+offset_top = 46.0
+offset_right = 1158.0
+offset_bottom = 69.0
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("11_x6mgf")
+
+[node name="Camera3D2" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 2.56058, 2.437)
+
+[connection signal="mode_update" from="." to="ModeLabel" method="_on_player_mode_update"]
+[connection signal="velocity_update" from="." to="VelocityLabel" method="_on_player_velocity_update"]
+[connection signal="state_change" from="PlayerStateController" to="StateLabel" method="_on_player_state_controller_state_change"]

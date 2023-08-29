@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://c00h7038u5pky"]
+
+[ext_resource type="Script" path="res://Weapons/Guns/equipped_gun.gd" id="1_65h2d"]
+[ext_resource type="Resource" path="res://Weapons/Guns/TestGun/test_gun_stats.tres" id="2_ioj48"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vbe6e"]
+size = Vector3(0.25, 0.25, 1)
+
+[node name="TestGunVM" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_vbe6e")
+script = ExtResource("1_65h2d")
+stats = ExtResource("2_ioj48")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="ProjSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)

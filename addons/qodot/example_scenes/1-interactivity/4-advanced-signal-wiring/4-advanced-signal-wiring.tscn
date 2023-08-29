@@ -1,7 +1,7 @@
-[gd_scene load_steps=40 format=3 uid="uid://ckwi0drqi8sve"]
+[gd_scene load_steps=40 format=3]
 
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1"]
-[ext_resource type="Resource" uid="uid://7h57nuq1xmoi" path="res://addons/qodot/game_definitions/fgd/qodot_fgd.tres" id="2"]
+[ext_resource type="Resource" uid="uid://c36hv0o6g0udo" path="res://addons/qodot/game_definitions/fgd/qodot_fgd.tres" id="2"]
 [ext_resource type="PackedScene" uid="uid://b7ccfkajnmn64" path="res://addons/qodot/game_definitions/fgd/point_classes/physics_ball.tscn" id="3"]
 [ext_resource type="Script" path="res://addons/qodot/game_definitions/fgd/solid_classes/mover.gd" id="4"]
 [ext_resource type="Texture2D" uid="uid://bw7tponn4vieu" path="res://addons/qodot/textures/base/grid.png" id="5"]
@@ -173,6 +173,7 @@ The `signal` entity takes a `targetname` property that should be referenced in t
 The `receiver` entity takes a `targetname` property that should be referenced in the `target` property of the `signal` entity that should connect to it, as well as a `receiver_name` that defines which receiver method is being targeted, and a `target` property referencing the `targetname` property of the object whose receiver method should be connected.
 
 This structure forms a chain of entity > signal > receiver > entity, and encodes all of the necessary information for Qodot to detect and connect the necessary signals at build time. Entities can have multiple sets of signals and receivers connected to them, allowing for complex interactions between objects."
+
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.5, 0.612372, -0.612372, 0, 0.707107, 0.707107, 0.866025, 0.353553, -0.353554, 0, 15, 0)

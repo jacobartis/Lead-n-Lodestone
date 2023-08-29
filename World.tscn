@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://dqjb0iyfsbwoj"]
+
+[ext_resource type="Texture2D" uid="uid://dq3jsl8xirqso" path="res://Textures/TestFloorTexture.png" id="1_uuqga"]
+[ext_resource type="PackedScene" uid="uid://ckidi7xl6vlnv" path="res://Player/player.tscn" id="2_4dhp3"]
+[ext_resource type="PackedScene" uid="uid://ca7pnx4tkgvle" path="res://Weapons/LodestoneBall/lodestone_ball_dropped.tscn" id="3_drrhg"]
+[ext_resource type="PackedScene" uid="uid://bfhp58jyk3qgv" path="res://Weapons/Guns/TestGun/test_gun_dropped.tscn" id="4_47txh"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_u2fs7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jdpb1"]
+albedo_texture = ExtResource("1_uuqga")
+uv1_scale = Vector3(1000, 1000, 1000)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5amn4"]
+material = SubResource("StandardMaterial3D_jdpb1")
+size = Vector2(10000, 10000)
+
+[node name="World" type="Node3D"]
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Map"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_u2fs7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/StaticBody3D"]
+mesh = SubResource("PlaneMesh_5amn4")
+
+[node name="Player" parent="." instance=ExtResource("2_4dhp3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="LodestoneBallDropped" parent="." instance=ExtResource("3_drrhg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0118084, 1.73816, -3.65082)
+
+[node name="TestGun" parent="." instance=ExtResource("4_47txh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9645, 0.365752, 1.28512)

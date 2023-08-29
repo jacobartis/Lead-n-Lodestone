@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bk11poxp6onjg"]
+
+[ext_resource type="Script" path="res://Weapons/Projectiles/base_projectile.gd" id="1_njfg3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2bp3k"]
+size = Vector3(0.75, 0.75, 0.75)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_do5pr"]
+albedo_color = Color(0.768627, 0.384314, 0.329412, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_avwwt"]
+material = SubResource("StandardMaterial3D_do5pr")
+radial_segments = 8
+rings = 4
+
+[node name="TestProjectile" type="CharacterBody3D"]
+collision_layer = 0
+script = ExtResource("1_njfg3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_2bp3k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_avwwt")
+
+[node name="DespawnTimer" type="Timer" parent="."]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.905882, 0.482353, 0.490196, 1)
+light_energy = 2.0
+omni_attenuation = 3.0

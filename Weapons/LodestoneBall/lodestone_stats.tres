@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="WepRes" load_steps=2 format=3 uid="uid://d26dh1pkpk6xg"]
+
+[ext_resource type="Script" path="res://CustomResources/wep_res.gd" id="1_nbdbp"]
+
+[resource]
+script = ExtResource("1_nbdbp")
+damage = 1.0
+attack_speed = 1.0
+mass = 5.0
+thow_damage = 20.0
+auto = false

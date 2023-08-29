@@ -1,7 +1,7 @@
-[gd_scene load_steps=166 format=3 uid="uid://csnhjuuawgrxk"]
+[gd_scene load_steps=166 format=3]
 
 [ext_resource type="LightmapGIData" uid="uid://b3hasm8twcdh2" path="res://addons/qodot/example_scenes/0-visuals/5-baked-lighting/5-1-baked-lightmaps.lmbake" id="1_ij2ql"]
-[ext_resource type="Resource" uid="uid://7h57nuq1xmoi" path="res://addons/qodot/game_definitions/fgd/qodot_fgd.tres" id="2"]
+[ext_resource type="Resource" uid="uid://c36hv0o6g0udo" path="res://addons/qodot/game_definitions/fgd/qodot_fgd.tres" id="2"]
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_enuko"]

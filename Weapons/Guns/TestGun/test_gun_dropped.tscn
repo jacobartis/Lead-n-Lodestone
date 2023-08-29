@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfhp58jyk3qgv"]
+
+[ext_resource type="Script" path="res://Weapons/base_dropped_weapon.gd" id="1_jy2ds"]
+[ext_resource type="Resource" path="res://Weapons/Guns/TestGun/test_gun_stats.tres" id="2_0p42w"]
+[ext_resource type="PackedScene" uid="uid://c00h7038u5pky" path="res://Weapons/Guns/TestGun/test_gun_equipped.tscn" id="3_hcixw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4lsyq"]
+size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_usnuv"]
+size = Vector3(0.25, 0.25, 1)
+
+[node name="TestGun" type="RigidBody3D" groups=["dropped_weapon"]]
+script = ExtResource("1_jy2ds")
+stats = ExtResource("2_0p42w")
+equipped = ExtResource("3_hcixw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_4lsyq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_usnuv")

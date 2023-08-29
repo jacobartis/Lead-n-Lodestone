@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://ca7pnx4tkgvle"]
+
+[ext_resource type="Script" path="res://Weapons/base_dropped_weapon.gd" id="1_yuq2h"]
+[ext_resource type="Resource" uid="uid://d26dh1pkpk6xg" path="res://Weapons/LodestoneBall/lodestone_stats.tres" id="2_i7hgn"]
+[ext_resource type="PackedScene" uid="uid://ddm27iejf3jbn" path="res://Weapons/LodestoneBall/lodestone_ball_equipped.tscn" id="3_omksn"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ng8ic"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xcch"]
+albedo_color = Color(0.286275, 0.286275, 0.286275, 1)
+metallic = 0.25
+
+[sub_resource type="SphereMesh" id="SphereMesh_f2mg3"]
+material = SubResource("StandardMaterial3D_5xcch")
+radial_segments = 16
+rings = 8
+
+[node name="LodestoneBallDropped" type="RigidBody3D" groups=["lodestone_ball"]]
+script = ExtResource("1_yuq2h")
+stats = ExtResource("2_i7hgn")
+equipped = ExtResource("3_omksn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ng8ic")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_f2mg3")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+omni_range = 3.0

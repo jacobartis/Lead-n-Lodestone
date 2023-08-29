@@ -3,8 +3,7 @@ extends Resource
 
 var prefix: String = ""
 
-@export var class_options := QodotUtil.CATEGORY_STRING
-
+@export_group("Class Options")
 @export var classname := ""
 
 @export var description := ""
@@ -22,8 +21,7 @@ var prefix: String = ""
 	"color": Color(0.8, 0.8, 0.8)
 }
 
-@export var node_options: String = QodotUtil.CATEGORY_STRING
-
+@export_group("Node Options")
 @export var node_class := ""
 
 @export var transient_node := false
@@ -93,7 +91,7 @@ func build_def_text() -> String:
 			prop_val = str(value)
 		elif value is float:
 			prop_type = "float"
-			prop_val = str(value)
+			prop_val = "\"" + str(value) + "\""
 		elif value is String:
 			prop_type = "string"
 			prop_val = "\"" + value + "\""

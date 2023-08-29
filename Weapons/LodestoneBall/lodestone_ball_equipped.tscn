@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddm27iejf3jbn"]
+
+[ext_resource type="Script" path="res://Weapons/base_equipped_weapon.gd" id="1_phpcf"]
+
+[node name="lodestone_ball_equipped" type="MeshInstance3D"]
+script = ExtResource("1_phpcf")
+
+[node name="AttackCooldown" type="Timer" parent="."]
