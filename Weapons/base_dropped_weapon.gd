@@ -13,8 +13,10 @@ func set_equipped(val:PackedScene):
 
 func set_stats(res:WepRes):
 	stats = res
+	set_mass(stats.mass)
 
 #Getters
+
 func get_equipped_ver():
 	#Saves the dropped version of the weapon
 	var packed = PackedScene.new()

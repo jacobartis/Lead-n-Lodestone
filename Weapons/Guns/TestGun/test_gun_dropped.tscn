@@ -10,7 +10,9 @@ size = Vector3(0.25, 0.25, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_usnuv"]
 size = Vector3(0.25, 0.25, 1)
 
-[node name="TestGun" type="RigidBody3D" groups=["dropped_weapon"]]
+[node name="TestGun" type="RigidBody3D" groups=["dropped_weapon", "magnetic"]]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_jy2ds")
 stats = ExtResource("2_0p42w")
 equipped = ExtResource("3_hcixw")

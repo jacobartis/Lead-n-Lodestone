@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqjb0iyfsbwoj"]
+[gd_scene load_steps=10 format=3 uid="uid://dqjb0iyfsbwoj"]
 
 [ext_resource type="Texture2D" uid="uid://dq3jsl8xirqso" path="res://Textures/TestFloorTexture.png" id="1_uuqga"]
 [ext_resource type="PackedScene" uid="uid://ckidi7xl6vlnv" path="res://Player/player.tscn" id="2_4dhp3"]
@@ -15,11 +15,19 @@ uv1_scale = Vector3(1000, 1000, 1000)
 material = SubResource("StandardMaterial3D_jdpb1")
 size = Vector2(10000, 10000)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_xr3ys"]
+size = Vector3(1, 2, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ylmb2"]
+size = Vector3(1, 2, 5)
+
 [node name="World" type="Node3D"]
 
 [node name="Map" type="Node3D" parent="."]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Map"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/StaticBody3D"]
 shape = SubResource("WorldBoundaryShape3D_u2fs7")
@@ -27,11 +35,31 @@ shape = SubResource("WorldBoundaryShape3D_u2fs7")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Map/StaticBody3D"]
 mesh = SubResource("PlaneMesh_5amn4")
 
+[node name="StaticBody3D2" type="StaticBody3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.11661, 1, -0.00921631)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/StaticBody3D2"]
+shape = SubResource("BoxShape3D_xr3ys")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/StaticBody3D2"]
+mesh = SubResource("BoxMesh_ylmb2")
+
 [node name="Player" parent="." instance=ExtResource("2_4dhp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="LodestoneBallDropped" parent="." instance=ExtResource("3_drrhg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0118084, 1.73816, -3.65082)
 
+[node name="LodestoneBallDropped2" parent="." instance=ExtResource("3_drrhg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.44105, 1.73816, -2.49897)
+
 [node name="TestGun" parent="." instance=ExtResource("4_47txh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9645, 0.365752, 1.28512)
+
+[node name="TestGun2" parent="." instance=ExtResource("4_47txh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.46665, 0.365752, 5.33164)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)

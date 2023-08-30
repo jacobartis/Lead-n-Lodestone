@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ckidi7xl6vlnv"]
+[gd_scene load_steps=15 format=3 uid="uid://ckidi7xl6vlnv"]
 
 [ext_resource type="Script" path="res://Player/Scripts/player_controller.gd" id="1_28mnp"]
 [ext_resource type="Resource" uid="uid://d2gi77v6ex5qj" path="res://Player/Resources/player_physics.tres" id="2_cuoig"]
@@ -16,6 +16,9 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1utri"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ya6ur"]
+size = Vector3(0.1, 0.1, 0)
+
 [node name="Player" type="CharacterBody3D" groups=["damageable"]]
 script = ExtResource("1_28mnp")
 physics_res = ExtResource("2_cuoig")
@@ -32,6 +35,26 @@ current = true
 
 [node name="InteractRay" type="RayCast3D" parent="Camera3D"]
 target_position = Vector3(0, 0, -5)
+collision_mask = 2
+debug_shape_thickness = 1
+
+[node name="BallRay" type="RayCast3D" parent="Camera3D"]
+target_position = Vector3(0, 0, -20)
+collision_mask = 4
+debug_shape_custom_color = Color(0, 0.219608, 0, 1)
+debug_shape_thickness = 1
+
+[node name="AimRay" type="RayCast3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+target_position = Vector3(0, 0, -100)
+collision_mask = 2147483649
+
+[node name="MaxAim" type="StaticBody3D" parent="Camera3D/AimRay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -99)
+collision_layer = 2147483649
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/AimRay/MaxAim"]
+shape = SubResource("BoxShape3D_ya6ur")
 
 [node name="GunHand" type="Node3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.25, -0.5)

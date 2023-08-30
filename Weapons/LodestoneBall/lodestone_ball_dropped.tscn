@@ -1,30 +1,42 @@
-[gd_scene load_steps=7 format=3 uid="uid://ca7pnx4tkgvle"]
+[gd_scene load_steps=8 format=3 uid="uid://ca7pnx4tkgvle"]
 
-[ext_resource type="Script" path="res://Weapons/base_dropped_weapon.gd" id="1_yuq2h"]
-[ext_resource type="Resource" uid="uid://d26dh1pkpk6xg" path="res://Weapons/LodestoneBall/lodestone_stats.tres" id="2_i7hgn"]
+[ext_resource type="Script" path="res://Weapons/LodestoneBall/lodestone_ball_dropped.gd" id="1_gt0nq"]
+[ext_resource type="Resource" uid="uid://wia4jvivlc6u" path="res://Weapons/LodestoneBall/LodestoneBall.tres" id="2_ef6j4"]
 [ext_resource type="PackedScene" uid="uid://ddm27iejf3jbn" path="res://Weapons/LodestoneBall/lodestone_ball_equipped.tscn" id="3_omksn"]
+[ext_resource type="Material" uid="uid://dlu5kvkk28crd" path="res://Weapons/LodestoneBall/lodestone_under.tres" id="4_sqet1"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ng8ic"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xcch"]
-albedo_color = Color(0.286275, 0.286275, 0.286275, 1)
-metallic = 0.25
+[sub_resource type="SphereShape3D" id="SphereShape3D_1ft22"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_f2mg3"]
-material = SubResource("StandardMaterial3D_5xcch")
+material = ExtResource("4_sqet1")
 radial_segments = 16
 rings = 8
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_45dlp"]
+radius = 5.0
+
 [node name="LodestoneBallDropped" type="RigidBody3D" groups=["lodestone_ball"]]
-script = ExtResource("1_yuq2h")
-stats = ExtResource("2_i7hgn")
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("1_gt0nq")
+stats = ExtResource("2_ef6j4")
 equipped = ExtResource("3_omksn")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_ng8ic")
+shape = SubResource("SphereShape3D_1ft22")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Model" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_f2mg3")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 omni_range = 3.0
+
+[node name="MagnetRange" type="Area3D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MagnetRange"]
+shape = SubResource("SphereShape3D_45dlp")
+
+[connection signal="body_entered" from="MagnetRange" to="." method="_on_magnet_range_body_entered"]
+[connection signal="body_exited" from="MagnetRange" to="." method="_on_magnet_range_body_exited"]

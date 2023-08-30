@@ -9,8 +9,10 @@ signal mode_update(mode)
 @onready var state_controller: Node = $PlayerStateController
 @onready var cam: Camera3D = $Camera3D
 @onready var interact_ray = $Camera3D/InteractRay
+@onready var aim_ray = $Camera3D/AimRay
 @onready var gun_hand = $Camera3D/GunHand
 @onready var ball_hand = $Camera3D/BallHand
+@onready var ball_ray = $Camera3D/BallRay
 
 #Physics Variables
 var max_ground_speed: float = 10
@@ -50,21 +52,34 @@ func _ready() -> void:
 
 func _process(delta) -> void:
 	state_controller.process(delta)
+	set_aim()
 	if int_control:
-		check_mode_toggle()
-		check_interact()
-		check_drop()
-		check_attack()
+		check_base_interaction()
+		if ball_mode:
+			check_ball_controls()
 
-func check_mode_toggle():
-	if !Input.is_action_just_pressed("Player_Change_Mode"):
+func set_aim() -> void:
+	if !aim_ray.is_colliding():
 		return
+	if get_weapon(gun_hand):
+		get_weapon(gun_hand).look_at(aim_ray.get_collision_point())
+	if get_weapon(ball_hand):
+		get_weapon(ball_hand).look_at(aim_ray.get_collision_point())
+
+func check_base_interaction():
+	if Input.is_action_just_pressed("Player_Change_Mode"):
+		mode_toggle()
+	if Input.is_action_just_pressed("Player_Interact"):
+		interact()
+	if Input.is_action_just_pressed("Player_Throw"):
+		drop()
+	check_attack()
+
+func mode_toggle():
 	ball_mode = !ball_mode
 	emit_signal("mode_update",ball_mode)
 
-func check_interact() -> void:
-	if !Input.is_action_just_pressed("Player_Interact"):
-		return
+func interact() -> void:
 	if !interact_ray.get_collider():
 		return
 	
@@ -73,9 +88,7 @@ func check_interact() -> void:
 	if interact_ray.get_collider().is_in_group("lodestone_ball"):
 		equip_weapon(interact_ray.get_collider(),ball_hand)
 
-func check_drop() ->void:
-	if !Input.is_action_just_pressed("Player_Throw"):
-		return
+func drop() ->void:
 	if !ball_mode and get_weapon(gun_hand):
 		drop_weapon(gun_hand)
 	elif ball_mode and get_weapon(ball_hand):
@@ -108,6 +121,42 @@ func drop_weapon(hand:Node3D):
 	drop_ver.apply_impulse(-drop_ver.transform.basis.z*20)
 	
 	get_weapon(hand).queue_free()
+
+func check_ball_controls():
+	if Input.is_action_pressed("Player_Ball_Pull"):
+		ball_pull()
+	if Input.is_action_just_pressed("Player_Ball_Toggle_Polarity"):
+		ball_toggle_polarity()
+	if Input.is_action_just_pressed("Player_Ball_Toggle_Active"):
+		ball_toggle_active()
+
+func ball_pull() -> void:
+	if get_weapon(ball_hand):
+		return
+	if !ball_ray.is_colliding():
+		return
+	var ball = ball_ray.get_collider()
+	ball.apply_impulse(ball.global_position.direction_to(global_position)*50)
+
+func ball_toggle_polarity() -> void:
+	var ball
+	if get_weapon(ball_hand):
+		ball = get_weapon(ball_hand)
+	elif ball_ray.is_colliding():
+		ball = ball_ray.get_collider()
+	else:
+		return
+	ball.set_polarity(!ball.polarity)
+
+func ball_toggle_active() -> void:
+	var ball
+	if get_weapon(ball_hand):
+		ball = get_weapon(ball_hand)
+	elif ball_ray.is_colliding():
+		ball = ball_ray.get_collider()
+	else:
+		return
+	ball.set_active(!ball.active)
 
 func _physics_process(delta) -> void:
 	state_controller.physics_process(delta)
