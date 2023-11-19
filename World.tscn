@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dqjb0iyfsbwoj"]
+[gd_scene load_steps=9 format=3 uid="uid://dqjb0iyfsbwoj"]
 
 [ext_resource type="Texture2D" uid="uid://dq3jsl8xirqso" path="res://Textures/TestFloorTexture.png" id="1_uuqga"]
 [ext_resource type="PackedScene" uid="uid://ckidi7xl6vlnv" path="res://Player/player.tscn" id="2_4dhp3"]
-[ext_resource type="PackedScene" uid="uid://ca7pnx4tkgvle" path="res://Weapons/LodestoneBall/lodestone_ball_dropped.tscn" id="3_drrhg"]
 [ext_resource type="PackedScene" uid="uid://bfhp58jyk3qgv" path="res://Weapons/Guns/TestGun/test_gun_dropped.tscn" id="4_47txh"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_u2fs7"]
@@ -48,12 +47,6 @@ mesh = SubResource("BoxMesh_ylmb2")
 
 [node name="Player" parent="." instance=ExtResource("2_4dhp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="LodestoneBallDropped" parent="." instance=ExtResource("3_drrhg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0118084, 1.73816, -3.65082)
-
-[node name="LodestoneBallDropped2" parent="." instance=ExtResource("3_drrhg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.44105, 1.73816, -2.49897)
 
 [node name="TestGun" parent="." instance=ExtResource("4_47txh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9645, 0.365752, 1.28512)
