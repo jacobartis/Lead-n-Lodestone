@@ -1,6 +1,10 @@
 extends Node3D
 class_name EquipedWeapon
 
+#Signals
+
+signal dropping()
+
 #Variable
 
 @export var stats: WepRes
@@ -19,6 +23,11 @@ func set_stats(res:WepRes):
 #Getters
 
 func get_dropped_ver():
+	emit_signal("dropping")
+	
+	if !dropped:
+		return null
+	
 	var packed = PackedScene.new()
 	packed.pack(self)
 	var inst = dropped.instantiate()
@@ -39,6 +48,10 @@ func auto_attack() -> void:
 	if !stats.is_auto():
 		return
 	attack()
+
+func drop() -> RigidBody3D:
+	queue_free()
+	return get_dropped_ver()
 
 #To be overridden by weapon type
 func attack():
