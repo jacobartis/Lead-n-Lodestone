@@ -18,6 +18,8 @@ radius = 5.0
 [node name="LodestoneBallDropped" type="RigidBody3D" groups=["lodestone_ball"]]
 collision_layer = 7
 collision_mask = 7
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_gt0nq")
 stats = ExtResource("2_ef6j4")
 equipped = ExtResource("3_omksn")
@@ -38,5 +40,7 @@ collision_mask = 3
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MagnetRange"]
 shape = SubResource("SphereShape3D_45dlp")
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="equipping" from="." to="." method="_on_equipping"]
 [connection signal="body_entered" from="MagnetRange" to="." method="_on_magnet_range_body_entered"]
 [connection signal="body_exited" from="MagnetRange" to="." method="_on_magnet_range_body_exited"]

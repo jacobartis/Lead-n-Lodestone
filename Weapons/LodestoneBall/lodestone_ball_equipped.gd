@@ -14,19 +14,23 @@ signal attract_time_update(at)
 
 var attract_time: float
 
-var polarity: bool = true
+var neg_pol: bool = false
 var active: bool = false
 var mag_bodies: Array[RigidBody3D] 
 
 #Setters
 
 func set_active(val: bool) -> void:
-	if val:
-		active = can_attack()
-	active = val
+	active = val and can_attack()
+
 
 func set_polarity(val: bool) -> void:
-	polarity = val
+	neg_pol = val and active
+
+#Getters
+
+func get_polarity() -> bool:
+	return neg_pol
 
 #Functions
 
@@ -34,11 +38,11 @@ func _ready():
 	attract_time = stats.attract_time
 
 func _process(delta):
-	if polarity and active:
+	if neg_pol and active:
 		attract_time -= delta*2
-	
-	if attract_time <= 0:
-		start_cooldown()
+#
+#	if attract_time <= 0:
+#		start_cooldown()
 	attract_time = clamp(attract_time+delta,0,stats.attract_time)
 
 func _physics_process(delta):
@@ -47,10 +51,10 @@ func _physics_process(delta):
 	
 	m_range.set_global_position(get_magnet_point())
 	
-	if polarity:
-		attract()
-	else:
+	if neg_pol:
 		repel()
+	else:
+		attract()
 
 func attract():
 	for body in mag_bodies:
@@ -67,11 +71,11 @@ func attract():
 		
 		body.set_linear_velocity(force*body.global_position.direction_to(m_range.global_position))
 
-
 func repel():
 	for body in mag_bodies:
 		var force = stats.strength
-		body.set_linear_velocity(force*body.global_position.direction_to(global_transform.basis.z*-10))
+		body.apply_impulse(force*body.global_position.direction_to(global_transform.basis.z*-100))
+	set_polarity(false)
 	start_cooldown()
 
 #Gets the point of the magnatisms origin
