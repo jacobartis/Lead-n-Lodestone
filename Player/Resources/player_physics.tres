@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_chdej")
-max_ground_speed = 15.0
-max_air_speed = 10.0
-jump_strength = 7.5
+max_ground_speed = 10.0
+max_air_speed = 0.94
+jump_strength = 10.0
 friction = 8.0

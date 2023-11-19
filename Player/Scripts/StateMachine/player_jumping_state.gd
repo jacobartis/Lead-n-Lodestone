@@ -6,8 +6,10 @@ func enter():
 	vel.y += phy.jump_strength
 	body.set_velocity(vel)
 
+
 func process(delta):
 	return PlayerBaseState.State.Idle
+
 
 func physics_process(delta):
 	body.move_and_slide()

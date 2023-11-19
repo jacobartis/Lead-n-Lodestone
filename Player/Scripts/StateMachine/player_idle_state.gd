@@ -1,12 +1,6 @@
 extends PlayerBaseState
 
-#Functions
 
-func enter():
-	body.set_int_control(true)
-	body.set_cam_control(true)
-
-#Manages switches from the idle state
 func process(delta) -> PlayerBaseState.State:
 	if !body.is_on_floor():
 		return PlayerBaseState.State.Falling

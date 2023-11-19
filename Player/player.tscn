@@ -38,7 +38,7 @@ target_position = Vector3(0, 0, -5)
 collision_mask = 2
 debug_shape_thickness = 1
 
-[node name="BallRay" type="RayCast3D" parent="Camera3D"]
+[node name="MagnetismRay" type="RayCast3D" parent="Camera3D"]
 target_position = Vector3(0, 0, -20)
 collision_mask = 4
 debug_shape_custom_color = Color(0, 0.219608, 0, 1)
@@ -58,9 +58,6 @@ shape = SubResource("BoxShape3D_ya6ur")
 
 [node name="GunHand" type="Node3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.25, -0.5)
-
-[node name="BallHand" type="Node3D" parent="Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, -0.25, -0.5)
 
 [node name="PlayerStateController" type="Node" parent="."]
 script = ExtResource("2_et1iq")
@@ -103,9 +100,39 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("11_x6mgf")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.5
+offset_top = -11.5
+offset_right = 1.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.223529, 0.568627, 0.290196, 1)
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -1.5
+offset_right = 12.0
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.223529, 0.568627, 0.290196, 1)
+
 [node name="Camera3D2" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 2.56058, 2.437)
 
-[connection signal="mode_update" from="." to="ModeLabel" method="_on_player_mode_update"]
 [connection signal="velocity_update" from="." to="VelocityLabel" method="_on_player_velocity_update"]
 [connection signal="state_change" from="PlayerStateController" to="StateLabel" method="_on_player_state_controller_state_change"]
