@@ -2,7 +2,7 @@ extends Node
 
 #Variables
 
-var mouse_sensitivity: float = 0.001
+var mouse_sensitivity: float = 0.002
 
 #Getters
 
