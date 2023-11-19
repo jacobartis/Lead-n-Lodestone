@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7ci8yh5g6eqk"]
+
+[ext_resource type="Script" path="res://Weapons/Guns/equipped_gun.gd" id="1_adubi"]
+[ext_resource type="Resource" uid="uid://bssxql8pntqtt" path="res://Weapons/Guns/TestGun/test_gun_stats.tres" id="2_3vtg1"]
+[ext_resource type="AudioStream" uid="uid://demk6g0xvklmq" path="res://Weapons/Guns/TestGun/shoot.mp3" id="3_a7hsi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wbxon"]
+albedo_color = Color(0.2, 0.47451, 0.164706, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mxeq8"]
+material = SubResource("StandardMaterial3D_wbxon")
+size = Vector3(0.25, 0.25, 1)
+
+[node name="DefaultGun" type="MeshInstance3D" groups=["DefaultGun"]]
+transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_mxeq8")
+script = ExtResource("1_adubi")
+stats = ExtResource("2_3vtg1")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="ProjSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+
+[node name="ShootSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_a7hsi")
