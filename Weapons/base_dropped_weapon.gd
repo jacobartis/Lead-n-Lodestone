@@ -1,6 +1,10 @@
 extends RigidBody3D
 class_name DroppedWeapon
 
+#Signals
+
+signal equipping()
+
 #Variable
 
 @export var stats: WepRes
@@ -18,6 +22,7 @@ func set_stats(res:WepRes):
 #Getters
 
 func get_equipped_ver():
+	emit_signal("equipping")
 	#Saves the dropped version of the weapon
 	var packed = PackedScene.new()
 	packed.pack(self)
@@ -26,3 +31,7 @@ func get_equipped_ver():
 	inst.set_dropped(packed)
 	inst.set_stats(stats)
 	return inst
+
+func equip() -> MeshInstance3D:
+	queue_free()
+	return get_equipped_ver()
