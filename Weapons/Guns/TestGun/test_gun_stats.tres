@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GunRes" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="GunRes" load_steps=3 format=3 uid="uid://bssxql8pntqtt"]
 
 [ext_resource type="Script" path="res://CustomResources/gun_res.gd" id="1_eur3q"]
 [ext_resource type="PackedScene" uid="uid://bk11poxp6onjg" path="res://Weapons/Projectiles/TestProjectile/test_projectile.tscn" id="1_sqcl4"]
@@ -8,9 +8,9 @@ script = ExtResource("1_eur3q")
 ammo = 10
 reload_time = 1.0
 proj_scene = ExtResource("1_sqcl4")
-proj_speed = 5.0
+proj_speed = 20.0
 damage = 1.0
-attack_speed = 1.0
+attack_speed = 5.0
 mass = 1.0
 thow_damage = 2.0
 auto = false
